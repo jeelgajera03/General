@@ -2,12 +2,9 @@ const { AuthorizationFailedError, AuthenticationFailedError } = require('../exce
 const { getUserModel } = require('../data-access/models');
 const config = require('../config');
 const jwt = require('jsonwebtoken');
-const { logAPI } = require('./logger');
 const moment = require('moment');
 
-// A helper function for sending errors
 const sendError = (res, error) => {
-  // Assuming this is a custom error handler you implemented
   res.status(error.statusCode || 500).json({
     message: error.message || 'An unexpected error occurred',
     code: error.code || 'UNKNOWN_ERROR',
@@ -29,12 +26,11 @@ module.exports = function makeHttpCallback({
       path: req.path,
       headers: req.headers,
       app: req.app,
-      logger: req.logger,
       startTime: moment().valueOf(),
       uuid: req.uuid,
       files: req.files,
     };
-    
+
     try {
       if (!byPassAuthCheck) {
         try {
@@ -74,7 +70,6 @@ module.exports = function makeHttpCallback({
             userRole: userData?.userRole || 2,
           };
         } catch (err) {
-          // req.logger.error('Error during user authentication', err);
           return sendError(res, new AuthorizationFailedError('Authentication failed'));
         }
       }
@@ -106,14 +101,12 @@ module.exports = function makeHttpCallback({
         }
 
       } catch (err) {
-        // req.logger.error('Error during controller execution', err);
         if (JSON.stringify(err).includes('timeout')) {
           isTimedOut = true;
         }
         await sendError(res, err);
       }
     } catch (error) {
-      // req.logger.error('General error handling', error);
       sendError(res, error);
     }
   };

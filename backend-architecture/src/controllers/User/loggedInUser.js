@@ -5,7 +5,6 @@ module.exports = function makeLoggedInUserAction({ loggedInUser, formatResponse,
       const result = await loggedInUser({ email, password });
       return formatResponse({ statusCode: 200, body: result });
     } catch (error) {
-      // httpRequest.logger.error(`Got error while logging in user`, error);
       return formatError({ error });
     }
   };
