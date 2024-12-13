@@ -12,4 +12,12 @@ router.post(
   })
 );
 
+router.post(
+  '/login',
+  makeHttpCallback({
+    controller: userController.loggedInUserAction,
+    byPassAuthCheck: true,
+  })
+);
+
 module.exports = router;

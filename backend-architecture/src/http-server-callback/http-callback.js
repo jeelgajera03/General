@@ -34,7 +34,7 @@ module.exports = function makeHttpCallback({
       uuid: req.uuid,
       files: req.files,
     };
-
+    
     try {
       if (!byPassAuthCheck) {
         try {

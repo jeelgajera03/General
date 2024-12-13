@@ -1,5 +1,7 @@
 const bcrypt = require('bcrypt');
-const { userDb } = require('../../data-access/mongo')
+const { userDb } = require('../../data-access/mongo');
+const jwt = require('jsonwebtoken');
+const config = require('../../config')
 const {
   AlreadyExistsError,
   AuthenticationFailedError,
@@ -15,9 +17,12 @@ const {
 } = require('../../exceptions');
 
 const makeRegisterUser = require('./registerUser');
-const registerUser = makeRegisterUser({bcrypt, userDb, AlreadyExistsError, ValidationError})
+const registerUser = makeRegisterUser({bcrypt, userDb, AlreadyExistsError, ValidationError});
 
+const makeLoggedInUser = require('./loggedInUser');
+const loggedInUser = makeLoggedInUser({bcrypt, userDb, AuthenticationFailedError, jwt, config});
 
 module.exports = {
   registerUser,
+  loggedInUser,
 }
