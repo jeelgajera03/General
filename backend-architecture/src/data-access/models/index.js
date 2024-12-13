@@ -1,20 +1,19 @@
-const makeInquiryModel = require('./Inquiry');
-const makeServiceModel = require('./service');
-const makeServiceCategoryModel = require('./serviceCategory');
-
+const makeUserModel = require('./User');
+const makeAccessLogModel = require('./AccessLogs');
+const makeThirdPartyLogsModel = require('./ThirdPartyLogs');
+const makeReqResLogsModel = require('./ReqResLogs');
 
 const Mongoose = require('mongoose');
-const {mainDbConnection} = require('../../config/db')
+const {mainDBConnection} = require('../../config/db')
 
-const getInquiryModel = makeInquiryModel({Mongoose, mainDbConnection});
-const getServiceModel = makeServiceModel({Mongoose, mainDbConnection});
-const getServiceCategoryModel= makeServiceCategoryModel({Mongoose, mainDbConnection});
+const getUserModel = makeUserModel({Mongoose, mainDBConnection});
+const getAccessLogModel = makeAccessLogModel({Mongoose, mainDBConnection});
+const getReqResModel = makeReqResLogsModel({mainDBConnection, Mongoose});
+const getThirdPartyLogsModel = makeThirdPartyLogsModel({Mongoose, mainDBConnection});
 
-
-console.log({getServiceModel});
-
-module.exports= {
-  getInquiryModel,
-  getServiceModel,
-  getServiceCategoryModel,
+module.exports = {
+  getUserModel,
+  getAccessLogModel,
+  getReqResModel,
+  getThirdPartyLogsModel
 }

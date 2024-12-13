@@ -1,6 +1,6 @@
 const Mongoose = require('mongoose');
 
-async function mainDbConnection() {
+async function mainDBConnection() {
   const dbUri = 'mongodb://localhost:27017/evont'; // Replace with your actual MongoDB URI
   try {
     await Mongoose.connect(dbUri); // Remove deprecated options
@@ -13,5 +13,5 @@ async function mainDbConnection() {
 }
 
 module.exports = {
-  mainDbConnection,
+  mainDBConnection,
 };

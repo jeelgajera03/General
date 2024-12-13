@@ -1,9 +1,5 @@
-const inquiryController= require('./inquiry');
-const serviceController= require('./service');
-const serviceCategoryController= require('./serviceCategory');
+const userController = require('./User');
 
 module.exports= Object.freeze({
-  inquiryController,
-  serviceController,
-  serviceCategoryController,
+  userController,
 });

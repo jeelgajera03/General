@@ -1,13 +1,15 @@
-// routes/router.js
 const express = require('express');
 const router = express.Router();
 
-const {
-} = require('./controllers');
-// Helper function to handle requests
-const handleRequest = (controller) => (req, res) => controller({ req, res });
+const makeHttpCallback = require('./http-server-callback/http-callback');
+const { userController  } = require('./controllers');
 
-// Inquiry Routes
-// router.post('/inquiries', handleRequest(inquiryController.createInquiryAction));
+router.post(
+  '/register',
+  makeHttpCallback({
+    controller: userController.registerUserAction,
+    byPassAuthCheck: true,
+  })
+);
 
 module.exports = router;
