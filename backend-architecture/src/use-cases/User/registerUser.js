@@ -1,5 +1,6 @@
 module.exports = function makeRegisterUser({ bcrypt, userDb, AlreadyExistsError, ValidationError}) {
-  return async function registerUser({ name, email, password }) {
+  return async function registerUser({ name, email, password, userRole}) {
+    console.log({userRole})
     if (!name || !email || !password) {
       throw new ValidationError('All fields (name, email, password) are required');
     }
@@ -14,6 +15,7 @@ module.exports = function makeRegisterUser({ bcrypt, userDb, AlreadyExistsError,
       name,
       email,
       password: hashedPassword,
+      userRole,
     });
 
     return {
