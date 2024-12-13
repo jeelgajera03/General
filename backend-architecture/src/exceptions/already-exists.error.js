@@ -8,7 +8,7 @@ class AlreadyExistsError extends Error {
     }
     this.name = 'AlreadyExistsError';
     // Custom debugging information
-    this.errorCode = errorCode;
+    this.code = errorCode;
     this.httpStatusCode = 400;
     this.date = new Date();
   }

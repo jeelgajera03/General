@@ -8,7 +8,7 @@ class AuthenticationFailedError extends Error {
     }
     this.name = 'AuthenticationFailedError';
     // Custom debugging information
-    this.errorCode = errorCode;
+    this.code = errorCode;
     this.httpStatusCode = 401;
     this.date = new Date();
   }

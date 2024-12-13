@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const moment = require('moment');
 
 const sendError = (res, error) => {
+  console.log({error})
   res.status(error.statusCode || 500).json({
     message: error.message || 'An unexpected error occurred',
     code: error.code || 'UNKNOWN_ERROR',
@@ -31,37 +32,42 @@ module.exports = function makeHttpCallback({
       files: req.files,
     };
 
+    console.log({byPassAuthCheck})
     try {
       if (!byPassAuthCheck) {
         try {
           const authHeader = req.headers['authorization'];
+          console.log({authHeader});
           if (!authHeader) {
-            return sendError(res, new AuthenticationFailedError('Authorization Token missing'));
+            return sendError(res, new AuthenticationFailedError(102, 'Authorization Token missing'));
           }
 
           // Extract token from header
           const token = authHeader.split(' ')[1];
+          console.log({token})
 
           // Verify JWT token
           const decodedToken = jwt.verify(token, config.jwt.secret);
+          console.log({decodedToken})
           if (!decodedToken) {
-            return sendError(res, new AuthorizationFailedError('Invalid Authorization Token'));
+            return sendError(res, new AuthorizationFailedError(103, 'Invalid Authorization Token'));
           }
-
           // Fetch user data from the database
           const userModel = await getUserModel();
           const userData = await userModel
-            .findOne({ userId: decodedToken.userId })
+            .findOne({ _id: decodedToken.userId })
             .lean()
             .exec();
 
+          console.log({isAdmin,userData})
+
           if (isAdmin && userData?.userRole !== 1) {
-            return sendError(res, new AuthorizationFailedError('Access denied for non-admin users'));
+            return sendError(res, new AuthorizationFailedError(104, 'Access denied for non-admin users'));
           }
 
           // Check if user is active
           if (!userData?.isActive) {
-            return sendError(res, new AuthorizationFailedError('User account is inactive'));
+            return sendError(res, new AuthorizationFailedError(105, 'User account is inactive'));
           }
 
           // Attach user information to the request
@@ -70,7 +76,7 @@ module.exports = function makeHttpCallback({
             userRole: userData?.userRole || 2,
           };
         } catch (err) {
-          return sendError(res, new AuthorizationFailedError('Authentication failed'));
+          return sendError(res, new AuthorizationFailedError(106, 'Authentication failed'));
         }
       }
 

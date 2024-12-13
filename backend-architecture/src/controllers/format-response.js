@@ -24,7 +24,7 @@ function formatError({error}) {
     body: {
       message: error.message,
       name: error.name,
-      code: error.errorCode,
+      code: error.code,
     },
   });
 }
