@@ -25,7 +25,10 @@
     "jwks-rsa": "^3.1.0",
     "moment": "^2.30.1",
     "mongoose": "^8.7.3",
+    "mysql2": "^3.12.0",
     "nodemailer": "^6.9.16",
+    "sequelize": "^6.37.5",
+    "umzug": "^3.8.2",
     "url-pattern": "^1.0.3"
   }
 }
