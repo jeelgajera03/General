@@ -11,7 +11,13 @@
       "category" : "user"
     }
   },
-  "GET": {},
+  "GET": {
+    "/api/v1/users":{
+      "name": "get all users api",
+      "id": "3",
+      "category" : "user"
+    }
+  },
   "DELETE": {},
   "PUT":{},
   "Other": {}

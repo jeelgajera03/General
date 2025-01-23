@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
-
-const makeHttpCallback = require('./http-server-callback/http-callback');
-const { userController, productController  } = require('./controllers');
+const makeHttpCallback = require('../http-server-callback/http-callback');
+const { userController } = require('../controllers');
 
 router.post(
   '/register',
@@ -20,20 +19,12 @@ router.post(
   })
 );
 
-router.post(
-  '/products',
+router.get(
+  '/',
   makeHttpCallback({
-    controller: productController.addProductAction,
+    controller: userController.getAllUsersAction,
     byPassAuthCheck: false,
     isAdmin: true,
-  })
-);
-
-router.get(
-  '/products',
-  makeHttpCallback({
-    controller: productController.getProductListAction,
-    byPassAuthCheck: false,
   })
 );
 

@@ -4,6 +4,7 @@ function makeUserDb({ getUserModel }) {
   return Object.freeze({
     findUserByEmail,
     createUser,
+    getAllUsers,
   });
 
   async function findUserByEmail({ email }) {
@@ -20,6 +21,13 @@ function makeUserDb({ getUserModel }) {
       userRole,
     });
     return await newUser.save();
+  }
+
+  async function getAllUsers({ skip, limit }) {
+    const userModel = await getUserModel();
+    return await userModel.find({})
+      .skip(skip)
+      .limit(limit);
   }
 }
 
